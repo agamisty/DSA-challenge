@@ -1,0 +1,47 @@
+// SearchSuggestionSystem Class Definition
+class SearchSuggestionSystem {
+    constructor(products) {
+        // Sort the products alphabetically for consistent lexicographical suggestions
+        this.products = products.sort();
+    }
+
+    getSuggestions(searchWord) {
+        const result = [];
+        let prefix = "";
+
+        for (let char of searchWord) {
+            prefix += char;
+
+            // Find products that start with the current prefix
+            const matches = this.products.filter(product => product.startsWith(prefix));
+
+            // Only include up to 3 matches
+            result.push(matches.slice(0, 3));
+        }
+
+        return result;
+    }
+}
+
+//  Example Usage
+const products = ["mobile", "mouse", "moneypot", "monitor", "mousepad"];
+const searchWord = "mouse";
+
+// Create instance of the system
+const system = new SearchSuggestionSystem(products);
+
+// Get and print suggestions
+const suggestions = system.getSuggestions(searchWord);
+console.log("Suggestions for search word:", searchWord);
+console.log(suggestions);
+
+/*
+Expected Output:
+[
+  ["mobile", "moneypot", "monitor"],
+  ["mobile", "moneypot", "monitor"],
+  ["mouse", "mousepad"],
+  ["mouse", "mousepad"],
+  ["mouse", "mousepad"]
+]
+*/
